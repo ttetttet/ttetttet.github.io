@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>CI Portfolio | Communication Excellence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #faf9fc;
+            color: #1e1b2b;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Sticky video wrapper */
+        .video-sticky-wrapper {
+            width: 100%;
+            background: #000;
+            transition: all 0.2s ease;
+            z-index: 1000;
+        }
+        .video-sticky-wrapper.relative-video {
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+        .video-sticky-wrapper.fixed-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .video-spacer {
+            display: none;
+            width: 100%;
+        }
+        .video-sticky-wrapper.fixed-video + .video-spacer {
+            display: block;
+        }
+
+        video {
+            width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            background: black;
+            display: block;
+        }
+
+        .summary-block {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem 2rem;
+            margin: 2rem auto 3rem auto;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+            border: 1px solid #e9e7f2;
+        }
+
+        .summary-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: #6d5c9e;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-text {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #1e1b2b;
+        }
+
+        .critical-section {
+            margin: 4rem 0;
+            background: #f1eef9;
+            border-radius: 2rem;
+            padding: 2.5rem 2rem;
+        }
+
+        .section-badge {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            background: #ffffffcc;
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            border-radius: 50px;
+            color: #3a2c5f;
+            margin-bottom: 1rem;
+        }
+
+        .crit-buttons {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .crit-btn {
+            all: unset;
+            display: inline-block;
+            background: #2e2548;
+            padding: 0.7rem 1.8rem;
+            border-radius: 60px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .crit-btn {
+            box-shadow: 0 0 0 2px rgba(123,76,191,0.2), 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .crit-btn.active {
+            background: #7b4cbf;
+            box-shadow: 0 0 0 3px rgba(123,76,191,0.5), 0 4px 12px rgba(123,76,191,0.3);
+        }
+
+        .crit-btn:hover {
+            background: #5b3c99;
+            transform: translateY(-2px);
+            box-shadow: 0 0 0 3px rgba(123,76,191,0.6), 0 6px 14px rgba(0,0,0,0.15);
+        }
+
+        .prompt-text {
+            background: #e8e2ff;
+            padding: 0.6rem 1rem;
+            border-radius: 60px;
+            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #2e2548;
+            margin-bottom: 0.5rem;
+        }
+
+        .crit-content-block {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin-top: 0.8rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+
+        .crit-hidden {
+            display: none;
+        }
+
+        .crit-show {
+            display: block;
+        }
+
+        .crit-flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .crit-artifact {
+            flex: 1.2;
+            background: #faf8ff;
+            padding: 1rem;
+            border-radius: 1.2rem;
+        }
+
+        .crit-feedback {
+            flex: 1;
+        }
+
+        .ppt-embed-wrapper {
+            margin: 1rem 0;
+            background: #f3f0fe;
+            border-radius: 1rem;
+            padding: 0.8rem;
+            border: 1px solid #d9cff2;
+        }
+        .ppt-iframe {
+            width: 100%;
+            height: 350px;
+            border-radius: 0.75rem;
+            border: 1px solid #e2daf5;
+            background: white;
+        }
+        .embed-note {
+            font-size: 0.75rem;
+            background: #fff6e0;
+            padding: 0.4rem 0.8rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: #7a5a3e;
+        }
+        .video-reserve {
+            margin-top: 2rem;
+            background: #f0edf7;
+            border-radius: 1.2rem;
+            padding: 1.2rem 1.5rem;
+            border-left: 5px solid #7b4cbf;
+        }
+        .video-reserve-title {
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+            color: #2e2548;
+        }
+        .video-placeholder-box {
+            background: #e6e2f0;
+            border-radius: 1rem;
+            padding: 1rem;
+            text-align: center;
+            border: 2px dashed #9b86c9;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .real-figure-img {
+            width: 100%;
+            border-radius: 1rem;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+            background: #fefefe;
+            border: 1px solid #e4def5;
+            margin: 0.75rem 0;
+            transition: transform 0.2s;
+        }
+        .real-figure-img:hover {
+            transform: scale(1.01);
+        }
+        .fig-caption {
+            font-size: 0.8rem;
+            color: #4a3a6e;
+            background: #f3effc;
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            margin-top: 0.25rem;
+            margin-bottom: 0.75rem;
+        }
+        .professional-note {
+            background: #eae3ff;
+            border-left: 4px solid #7b4cbf;
+            padding: 0.6rem 1rem;
+            border-radius: 1rem;
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin: 1rem 0;
+        }
+        hr {
+            margin: 1rem 0;
+        }
+
+        .gallery-alt {
+            margin: 4rem 0;
+        }
+
+        .alt-item {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+            margin-bottom: 4rem;
+            background: #ffffff;
+            border-radius: 2rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.03);
+        }
+
+        .alt-image {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .multi-image-grid {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .multi-image-grid img {
+            width: calc(50% - 0.5rem);
+            min-width: 140px;
+            border-radius: 1rem;
+            object-fit: cover;
+            aspect-ratio: 4 / 3;
+            background: #edeaf3;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+            transition: transform 0.2s;
+        }
+        .multi-image-grid img:hover {
+            transform: scale(1.02);
+        }
+        @media (max-width: 600px) {
+            .multi-image-grid img {
+                width: 100%;
+            }
+        }
+
+        .alt-image img {
+            width: 100%;
+            border-radius: 1.5rem;
+            object-fit: cover;
+            aspect-ratio: 4 / 3;
+            background: #edeaf3;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+        }
+
+        .pdf-viewer {
+            width: 100%;
+            height: 420px;
+            border-radius: 1rem;
+            border: 1px solid #e3dfee;
+            background: #f9f7ff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .download-btn {
+            display: inline-block;
+            background: #2e2548;
+            color: white;
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+            transition: 0.2s;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+        }
+        .download-btn:hover {
+            background: #5b3c99;
+            transform: translateY(-2px);
+        }
+        .pdf-controls {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.8rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .alt-text {
+            flex: 1;
+            padding: 0.5rem;
+        }
+
+        .alt-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #2e2548;
+        }
+
+        .alt-sub {
+            font-weight: 600;
+            color: #6b4e9e;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.2px;
+        }
+
+        .detail-line {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+        .detail-label {
+            font-weight: 700;
+            color: #2e2548;
+            display: inline-block;
+            min-width: 70px;
+        }
+        .insight-block {
+            background: #f5f2ff;
+            padding: 0.8rem 1rem;
+            border-radius: 1rem;
+            margin-top: 0.8rem;
+            border-left: 3px solid #7b4cbf;
+        }
+        .separator-light {
+            height: 1px;
+            background: #e9e4f5;
+            margin: 0.8rem 0;
+        }
+
+        .reverse {
+            flex-direction: row-reverse;
+        }
+
+        /* FULL-WIDTH FOOTER WITH CENTERED TEXT AND FULL BORDER */
+        .full-width-footer {
+            width: 100%;
+            background: #faf9fc;
+            border-top: 2px solid #e3dfee;
+            margin-top: 2rem;
+            padding: 2rem 0 2.5rem;
+        }
+        .footer-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+        .full-width-footer p {
+            color: #5f5891;
+            line-height: 1.6;
+            margin: 0.5rem 0;
+        }
+        .full-width-footer .footer-small {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.2rem;
+            }
+            .alt-item {
+                flex-direction: column;
+            }
+            .reverse {
+                flex-direction: column;
+            }
+            video {
+                max-height: 50vh;
+            }
+            .ppt-iframe {
+                height: 250px;
+            }
+            .pdf-viewer {
+                height: 300px;
+            }
+            .footer-inner {
+                padding: 0 1.2rem;
+            }
+        }
+
+        .replace-bold {
+            font-weight: 700;
+            padding: 0 2px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .navigation-prompt {
+            background: #f9f3e2;
+            border-radius: 1rem;
+            padding: 0.8rem 1.2rem;
+            margin-top: 1.5rem;
+            text-align: center;
+            font-weight: 500;
+            color: #5a3e2e;
+            border-left: 4px solid #7b4cbf;
+        }
+    </style>
+</head>
+<body>
+
+<div class="video-sticky-wrapper" id="stickyVideoWrapper">
+    <video id="introVideo" autoplay muted loop playsinline controls>
+        <source src="https://cdn.jsdelivr.net/gh/ttetttet/ttetttet.github.io@main/Intro%20video(1).mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+<div class="video-spacer" id="videoSpacer"></div>
+
+<div class="container">
+    <div class="summary-block">
+        <div class="summary-label">✍️ SHORT WRITTEN SUMMARY (50–100 words)</div>
+        <div class="summary-text">
+            <strong class="replace-bold">I am a medical communicator who translates complex science into human impact. Across spoken, written, visual, and digital literacies, I design every message for its audience from tutoring 200+ students and serving 200+ elderly, to publishing peer-reviewed data visualisations and winning a city-wide essay award. My portfolio shows significant growth in my communication skills. I moved from fulfilling requirement to building something new. These practices embody critical thinking and lifelong learning of soft skills. It position me as a future clinician who communicates with empathy, precision and impact.</strong>
+        </div>
+    </div>
+
+    <div class="critical-section">
+        <div class="section-badge">🔍 CRITICAL INCIDENT NARRATED CASE</div>
+        <h2 style="font-size:1.8rem; font-weight:600; margin-bottom:0.5rem;">From feedback to fluency</h2>
+        <p style="margin-bottom:0.5rem;">I selected two Communication-intensive courses to anchor my reflective journey. In 2013, it taught me about data visualization showcases. In 2004, it taught me about making presentation slides.
+        Below, I show before/after revisions, the feedback that triggered change, and how I transferred these learnings beyond the classroom.</p>
+        
+        <p style="margin-bottom:0.5rem;">Select a CI-badged course to see before/after revision, feedback & key learning.</p>
+        
+        <div class="prompt-text">
+            💡 <strong>Explore both courses!</strong> Click the buttons below to switch between Visual & Written Rhetoric (BBMS2004) and Oral & Digital Storytelling (BBMS2013).
+        </div>
+
+        <div class="crit-buttons">
+            <button class="crit-btn active" data-course="BBMS2004">📘 BBMS2004 – Visual & Written Rhetoric</button>
+            <button class="crit-btn" data-course="BBMS2013">🎙️ BBMS2013 – Oral & Digital Storytelling</button>
+        </div>
+
+        <div id="critDynamicContent">
+            <!-- BBMS2004 content -->
+            <div id="BBMS2004-content" class="crit-content-block crit-show">
+                <div class="crit-flex">
+                    <div class="crit-artifact">
+                        <h3>📊 Original Artifact (description): <strong class="replace-bold">“The Cross‑Leg Effect in Postural Imbalance” – group presentation, unclear focus and flow</strong></h3>
+                        <p><strong>📌 Feedback received (rubric + peer):</strong> “<strong class="replace-bold">Full grade for my oral presentation, but the content is a bit too shallow and the flow is abrupt. Peer notes: ‘Hard to follow the cause‑and‑effect chain. The slides felt like isolated facts.’</strong>”</p>
+                        <hr>
+                        <h3>🔄 After Revision (transformed PowerPoint)</h3>
+                        <p><strong>Revised deck:</strong> narrative flow diagram (habit → mechanism → clinical impact), visual anchors (arrows, icons, colour‑coded zones), added clinical evidence studies.</p>
+                        <div class="ppt-embed-wrapper">
+                            <div style="font-weight:600; margin-bottom:6px;">✨ Improved PowerPoint preview (inline viewer may not work for all browsers – try reload or use download button below)</div>
+                            <iframe class="ppt-iframe" src="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/ttetttet/ttetttet.github.io/main/BBMS2004%20Group%207%20presentation%20slides.pptx&embedded=true" 
+                                frameborder="0" allowfullscreen></iframe>
+                            <div style="margin-top: 0.8rem; text-align: center;">
+                                <a class="download-btn" href="https://raw.githubusercontent.com/ttetttet/ttetttet.github.io/main/BBMS2004%20Group%207%20presentation%20slides.pptx" download="BBMS2004_Revised_Presentation.pptx" target="_blank">📥 Download PowerPoint (Revised)</a>
+                            </div>
+                        </div>
+                        <p><strong>Key changes:</strong> <strong class="replace-bold">Replaced bullet lists with a narrative flow diagram; added visual anchors for immediate comprehension; restructured spoken delivery to match slide sequence; deepened content with specific muscle names and clinical evidence studies.</strong></p>
+                    </div>
+                    <div class="crit-feedback">
+                        <h3>✨ Critical learning & evolution</h3>
+                        <p><strong class="replace-bold">I later applied the same narrative flow in a social enterprise competition pitch. The judges specifically praised the clarity and flow, noting that they “could follow the logic without any prior knowledge.” That pitch advanced to the final round, which is a direct outcome of this feedback-driven revision. This experience demonstrates learning critical thought about presentation logic and audience-centered design.</strong></p>
+                        <div style="background:#eee9ff; padding:1rem; border-radius: 1rem; margin-top:1rem;">
+                            🧠 <strong>Changed practice:</strong> <strong class="replace-bold">Scoring full marks orally did not mean the communication was effective. I learned that visual literacy is not decoration, it is the architecture of understanding. Now, for every presentation I design. I will ask what the single logical line I want the audience to follow is. This shift from “covering content” to “building a story” has fundamentally changed my approach.</strong>
+                        </div>
+                    </div>
+                </div>
+                <!-- BBMS2004 video block -->
+                <div class="video-reserve">
+                    <div class="video-reserve-title">
+                        <span>🎥</span> BBMS2004 – Visual & Written Rhetoric: Presentation Video
+                    </div>
+                    <div class="video-placeholder-box">
+                        <video controls preload="metadata" style="width:100%; border-radius:0.75rem;">
+                            <source src="https://raw.githubusercontent.com/ttetttet/ttetttet.github.io/main/BBMS2004%20communication.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                <div class="crit-buttons" style="margin-top: 1.5rem;">
+                    <button class="crit-btn active" data-course="BBMS2004">📘 BBMS2004 – Visual & Written Rhetoric</button>
+                    <button class="crit-btn" data-course="BBMS2013">🎙️ BBMS2013 – Oral & Digital Storytelling</button>
+                </div>
+                <div class="navigation-prompt">
+                    👉 <strong>Ready to see another side of my communication journey?</strong> Click the <strong>“BBMS2013 – Oral & Digital Storytelling”</strong> button above to explore how I transformed statistical figures into publication‑ready graphics through feedback and digital literacy.
+                </div>
+            </div>
+
+            <!-- BBMS2013 content -->
+            <div id="BBMS2013-content" class="crit-content-block crit-hidden">
+                <div class="crit-flex">
+                    <div class="crit-artifact">
+                        <h3>📄 Original Artifact (excerpt): <strong class="replace-bold">Treatment Analysis & Publication‑Ready Figures — R Markdown report comparing biomarker levels between treatment and placebo groups.</strong></h3>
+                        <div class="professional-note">
+                            🖼️ <strong>Original figure (before revision):</strong> Simple bar chart, limited self‑explanatory power. Feedback demanded direct statistical annotation on the graph.
+                        </div>
+                        <img class="real-figure-img" 
+                             src="https://raw.githubusercontent.com/ttetttet/ttetttet.github.io/main/Screenshot%202026-06-11%20150722.png" 
+                             alt="Original figure: crowded bar chart lacking embedded p-values and CI"
+                             onerror="this.src='https://placehold.co/800x500/f5f0ff/3a2c5f?text=Original+Figure+Placeholder'; this.onerror=null;">                        
+                        <p><strong>✏️ Feedback received (instructor):</strong> <em><strong class="replace-bold">“Please put p‑values and key values directly on the graph. Try using R coding to generate graph instead of powerpoint.”</strong></em></p>
+                        
+                        <h3>✅ After Revision (improved version)</h3>
+                        <div class="professional-note">
+                            ✨ <strong>Revised figure (after feedback):</strong> Embedded statistical annotations, callout box, and effect size – now fully self‑sufficient and publication‑ready.
+                        </div>
+                        <img class="real-figure-img" 
+                             src="https://raw.githubusercontent.com/ttetttet/ttetttet.github.io/main/Screenshot%202026-06-11%20150735.png" 
+                             alt="Revised figure: p=0.03, 95% CI, Cohen's d embedded; visual callout for key difference"
+                             onerror="this.src='https://placehold.co/800x500/f2edfc/5c44a0?text=Revised+Figure+Placeholder'; this.onerror=null;">
+                        <div class="fig-caption">📊 After revision: p‑value, confidence interval, and effect size directly on graph; clear callout box ensures three‑second comprehension.</div>
+                        
+                        <p><strong>Key changes:</strong> <strong class="replace-bold">Embedded exact p‑value, confidence interval, and effect size onto the graph; added a visual callout box with contrasting background; removed statistical details from the caption, making the figure entirely self‑sufficient; simplified axis labels and increased font size for readability.</strong></p>
+                        
+                    </div>
+                    <div class="crit-feedback">
+                        <h3>📝 What I learned & practice shift</h3>
+                        <p><strong class="replace-bold">Before this course, I treated figures as visual summaries that required textual support. The feedback taught me that digital literacy in science means building standalone visual evidence. I now start every R plotting task by asking: “Can a busy clinician grasp the result in three seconds?” This habit of embedding statistical clarity directly into graphics has become a signature of my research work, transforming how I communicate data—from code to conclusion.</strong></p>
+                        <div style="background:#eee9ff; padding:1rem; border-radius: 1rem; margin-top:1rem;">
+                            ⚡ <strong>Outcome impact:</strong> <strong class="replace-bold">During a subsequent research internship, I applied this principle to generate R‑based summary tables with all key statistics embedded inline. The tables were adopted into a conference poster. The course helped me to contribute to reproducible science research.</strong>
+                        </div>
+                    </div>
+                </div>
+                <!-- BBMS2013 video block -->
+                <div class="video-reserve">
+                    <div class="video-reserve-title">
+                        <span>🎥</span> BBMS2013 – Oral & Digital Storytelling: Research Video
+                    </div>
+                    <div class="video-placeholder-box">
+                        <video controls preload="metadata" style="width:100%; border-radius:0.75rem;">
+                            <source src="https://raw.githubusercontent.com/ttetttet/ttetttet.github.io/main/BBMS2013%20communication.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                <div class="crit-buttons" style="margin-top: 1.5rem;">
+                    <button class="crit-btn active" data-course="BBMS2004">📘 BBMS2004 – Visual & Written Rhetoric</button>
+                    <button class="crit-btn" data-course="BBMS2013">🎙️ BBMS2013 – Oral & Digital Storytelling</button>
+                </div>
+                <div class="navigation-prompt">
+                    👈 <strong>Explore the other perspective?</strong> Click the <strong>“BBMS2004 – Visual & Written Rhetoric”</strong> button above to see how I restructured a full presentation deck from feedback.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="gallery-alt">
+        <div style="margin-bottom:1rem;">
+            <span class="section-badge">📌 COMMUNICATION-INTENSIVE EXPERIENCE GALLERY</span>
+            <h2 style="font-size: 2rem; font-weight: 700;">4 applied showcases</h2>
+            <p>Clinical & Community communication · Essay award prize · Pitch competitions · Research publications</p>
+        </div>
+
+        <!-- 1 SPOKEN LITERACY -->
+        <div class="alt-item">
+            <div class="alt-image">
+                <div class="multi-image-grid">
+                    <img src="https://raw.githubusercontent.com/ttetttet/ttetttet.github.io/main/teaching%20photo%201%20(1).png" alt="Spoken presentation audience engagement" onerror="this.src='https://placehold.co/600x450/f2edf6/2e2548?text=Spoken+Image+1'">
+                    <img src="https://raw.githubusercontent.com/ttetttet/ttetttet/main/Untitled%20design.png" alt="Spoken presentation group discussion" onerror="this.src='https://placehold.co/600x450/eee9ff/2e2548?text=Spoken+Image+2'">
+                </div>
+            </div>
+            <div class="alt-text">
+                <div class="alt-title">🎤 <strong class="replace-bold">Spoken Literacy</strong></div>
+                <div class="alt-sub"><strong class="replace-bold">Teaching Tutorials, Community Advocacy & Clinical Communication</strong></div>
+                
+                <div class="detail-line"><span class="detail-label">Role:</span> <strong class="replace-bold">Senior tutor, research fellow, community ambassador</strong></div>
+                <div class="detail-line"><span class="detail-label">Audience:</span> <strong class="replace-bold">200+ students over 2 years, faculty, elderly community members, SEN students, psychiatric patients</strong></div>
+                <div class="detail-line"><span class="detail-label">Goal:</span> <strong class="replace-bold">Deliver empathetic, audience‑centered communication across education, community outreach, and clinical settings</strong></div>
+                <div class="separator-light"></div>
+                <div><span class="detail-label">Impact:</span> <strong class="replace-bold">Served over 200 elderly in a community research project; joined a program supporting SEN students; conducted over 50 clinical assessments with psychiatric patients, building rapport and therapeutic dialogue.</strong></div>
+                
+                <div class="insight-block">
+                    💡 <strong>CI‑badged course insight:</strong> The course taught me that spoken communication must be audience‑centered—carefully considering what content to cover and what tone to adopt. This shift dramatically improved my ability to connect with diverse listeners.
+                </div>
+                <div class="separator-light"></div>
+                <em>🎙️ Evidence: <strong class="replace-bold">Teaching feedback ratings, community project testimonials, and clinical OSCE evaluations.</strong></em>
+            </div>
+        </div>
+
+        <!-- 2 WRITTEN LITERACY -->
+        <div class="alt-item reverse">
+            <div class="alt-image">
+                <div class="pdf-controls">
+                    <a class="download-btn" href="https://raw.githubusercontent.com/ttetttet/ttetttet/main/Wong%20Sze%20Chun%20post-stroke%20living%20conditions%20in%20Hong%20Kong.pdf" download="Wong_Sze_Chun_Stroke_Essay.pdf" target="_blank">📥 Download PDF</a>
+                    <a class="download-btn" href="https://raw.githubusercontent.com/ttetttet/ttetttet/main/Wong%20Sze%20Chun%20post-stroke%20living%20conditions%20in%20Hong%20Kong.pdf" target="_blank" style="background:#5b3c99;">🔍 Open PDF in new tab</a>
+                </div>
+                <iframe class="pdf-viewer" src="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/ttetttet/ttetttet/main/Wong%20Sze%20Chun%20post-stroke%20living%20conditions%20in%20Hong%20Kong.pdf&embedded=true" frameborder="0"></iframe>
+                <p style="font-size:0.7rem; text-align:center; margin-top:0.5rem;">📄 Award‑winning essay (Hong Kong Stroke Society) – scroll to read | <a href="https://raw.githubusercontent.com/ttetttet/ttetttet/main/Wong%20Sze%20Chun%20post-stroke%20living%20conditions%20in%20Hong%20Kong.pdf" target="_blank" style="color:#6b4e9e;">Open in new tab</a></p>
+            </div>
+            <div class="alt-text">
+                <div class="alt-title">📝 <strong class="replace-bold">Written Literacy</strong></div>
+                <div class="alt-sub"><strong class="replace-bold">Award‑Winning Essay on Post‑Stroke Living Conditions in Hong Kong</strong></div>
+                
+                <div class="detail-line"><span class="detail-label">Role:</span> <strong class="replace-bold">Qualitative researcher and sole author</strong></div>
+                <div class="detail-line"><span class="detail-label">Audience:</span> <strong class="replace-bold">Academic judges, clinicians, stroke rehabilitation advocates, general public (tram campaign)</strong></div>
+                <div class="detail-line"><span class="detail-label">Goal:</span> <strong class="replace-bold">Translate complex epidemiological data into an accessible, emotionally resonant narrative</strong></div>
+                <div class="separator-light"></div>
+                <div><span class="detail-label">Outcome:</span> <strong class="replace-bold">Won top 5 in Hong Kong; experience shared publicly and promoted by the Hong Kong Stroke Society on a tram, reaching thousands of citizens.</strong></div>
+                
+                <div class="insight-block">
+                    📖 <strong>CI‑badged course insight:</strong> The course helped me balance academic rigour with patient voices, transforming a research paper into a pop‑science article that is interesting and easy to read—without losing depth.
+                </div>
+                <div class="separator-light"></div>
+                <p>📝 Judge comment: <strong class="replace-bold">“Exceptional ability to merge science with humanity – a model for public health writing.”</strong></p>
+            </div>
+        </div>
+
+        <!-- 3 VISUAL LITERACY -->
+        <div class="alt-item">
+            <div class="alt-image">
+                <img src="https://raw.githubusercontent.com/ttetttet/ttetttet/main/1Y8A8622ed%20(1).JPG" alt="Visual literacy pitch deck" onerror="this.src='https://placehold.co/600x450/edeaf7/3a2c5f?text=Visual+Deck+Preview'">
+            </div>
+            <div class="alt-text">
+                <div class="alt-title">🎨 <strong class="replace-bold">Visual Literacy</strong></div>
+                <div class="alt-sub"><strong class="replace-bold">Social Enterprise Pitch Deck – Visual Storytelling for Impact</strong></div>
+                
+                <div class="detail-line"><span class="detail-label">Role:</span> <strong class="replace-bold">Lead presenter and designer</strong></div>
+                <div class="detail-line"><span class="detail-label">Audience:</span> <strong class="replace-bold">Social innovation judges, NGO partners, HKU deans and professors</strong></div>
+                <div class="detail-line"><span class="detail-label">Goal:</span> <strong class="replace-bold">Strengthen logical flow and capture attention through visual communication</strong></div>
+                <div class="separator-light"></div>
+                <div><span class="detail-label">Impact:</span> <strong class="replace-bold">The visually‑driven pitch deck received excellent feedback from judges. Audience showed a clear understanding of the pitch.</strong></div>
+                
+                <div class="insight-block">
+                    🖌️ <strong>CI‑badged course insight:</strong> The course taught me how to integrate visual skills into my presentation to reinforce logical flow and maintain audience attention—turning slides into a visual narrative.
+                </div>
+            </div>
+        </div>
+
+        <!-- 4 DIGITAL LITERACY -->
+        <div class="alt-item reverse">
+            <div class="alt-image">
+                <img src="https://raw.githubusercontent.com/ttetttet/ttetttet/main/Screenshot%202026-06-11%20084852.png" alt="Publication‑ready statistics table and graph" onerror="this.src='https://placehold.co/600x450/f7f3ff/4a3680?text=Digital+Stats+Preview'">
+            </div>
+            <div class="alt-text">
+                <div class="alt-title">💻 <strong class="replace-bold">Digital Literacy</strong></div>
+                <div class="alt-sub"><strong class="replace-bold">Publication‑Ready Statistics Tables & Graphs – Conference Publication</strong></div>
+                
+                <div class="detail-line"><span class="detail-label">Role:</span> <strong class="replace-bold">Data analyst, co‑author</strong></div>
+                <div class="detail-line"><span class="detail-label">Audience:</span> <strong class="replace-bold">Reviewers and organizer of the Digital Mental health International Conference</strong></div>
+                <div class="detail-line"><span class="detail-label">Goal:</span> <strong class="replace-bold">Transform raw data into clear, standalone tables and figures for a peer‑reviewed conference</strong></div>
+                <div class="separator-light"></div>
+                <div><span class="detail-label">Result:</span> <strong class="replace-bold">Successfully published in the Digital Mental Health International Conference 2026. The figures possess immediate readability and statistical clarity.</strong></div>
+                
+                <div class="insight-block">
+                    📊 <strong>CI‑badged course insight:</strong> The biostatistics course taught me how to translate raw data into publication‑ready statistical tables and graphs—embedding p‑values, confidence intervals, and effect sizes directly on the visual.
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- end .container -->
+
+<!-- FULL-WIDTH FOOTER with full border line and centered text -->
+<div class="full-width-footer">
+    <div class="footer-inner">
+        <p>🎓 CI-badged portfolio | Communication literacies in action — spoken, written, visual, digital</p>
+        <p class="footer-small">Based on <strong class="replace-bold">BBMS2004 & BBMS2013</strong> · Critical incident learnings & real‑world impact</p>
+    </div>
+</div>
+
+<script>
+    // Sticky video logic
+    const videoWrapper = document.getElementById('stickyVideoWrapper');
+    const videoSpacer = document.getElementById('videoSpacer');
+    const SCROLL_THRESHOLD = 300;
+
+    function updateSpacerHeight() {
+        if (videoWrapper) {
+            const height = videoWrapper.offsetHeight;
+            videoSpacer.style.height = height + 'px';
+        }
+    }
+
+    function handleScroll() {
+        if (window.scrollY > SCROLL_THRESHOLD) {
+            videoWrapper.classList.add('relative-video');
+            videoWrapper.classList.remove('fixed-video');
+        } else {
+            videoWrapper.classList.add('fixed-video');
+            videoWrapper.classList.remove('relative-video');
+        }
+    }
+
+    window.addEventListener('load', () => {
+        updateSpacerHeight();
+        handleScroll();
+    });
+    window.addEventListener('resize', () => {
+        updateSpacerHeight();
+        handleScroll();
+    });
+    window.addEventListener('scroll', handleScroll);
+
+    const videoEl = document.getElementById('introVideo');
+    if (videoEl) {
+        videoEl.addEventListener('loadedmetadata', updateSpacerHeight);
+    }
+
+    // Critical incident toggle – all buttons now functional
+    const content2004 = document.getElementById('BBMS2004-content');
+    const content2013 = document.getElementById('BBMS2013-content');
+    
+    const allBtn2004 = document.querySelectorAll('[data-course="BBMS2004"]');
+    const allBtn2013 = document.querySelectorAll('[data-course="BBMS2013"]');
+    
+    function setActiveCourse(courseId) {
+        if (courseId === 'BBMS2004') {
+            content2004.classList.add('crit-show');
+            content2004.classList.remove('crit-hidden');
+            content2013.classList.add('crit-hidden');
+            content2013.classList.remove('crit-show');
+        } else {
+            content2013.classList.add('crit-show');
+            content2013.classList.remove('crit-hidden');
+            content2004.classList.add('crit-hidden');
+            content2004.classList.remove('crit-show');
+        }
+        
+        allBtn2004.forEach(btn => {
+            btn.classList.toggle('active', courseId === 'BBMS2004');
+        });
+        allBtn2013.forEach(btn => {
+            btn.classList.toggle('active', courseId === 'BBMS2013');
+        });
+    }
+
+    allBtn2004.forEach(btn => {
+        btn.addEventListener('click', () => setActiveCourse('BBMS2004'));
+    });
+    allBtn2013.forEach(btn => {
+        btn.addEventListener('click', () => setActiveCourse('BBMS2013'));
+    });
+
+    setActiveCourse('BBMS2004');
+</script>
+</body>
+</html>
